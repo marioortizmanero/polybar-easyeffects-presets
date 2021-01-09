@@ -11,7 +11,7 @@ A [Polybar](https://github.com/polybar/polybar) module to control [PulseEffects]
 
 ## Installation
 
-Download the [bash script](https://github.com/marioortizmanero/polybar-pulseeffects-presets/blob/master/polybar-pulseeffects-presets.bash) from this repository, or extract it from [the latest release](https://github.com/marioortizmanero/polybar-pulseeffects-presets/releases/latest), and put it somewhere in your `$PATH`.
+Download the [bash script](https://github.com/marioortizmanero/polybar-pulseeffects-presets/blob/master/pulseeffects-presets.bash) from this repository, or extract it from [the latest release](https://github.com/marioortizmanero/polybar-pulseeffects-presets/releases/latest), and put it somewhere in your `$PATH`.
 
 #### Dependencies
 
