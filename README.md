@@ -90,9 +90,9 @@ type = custom/ipc
 hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left    = pulseeffects-presets.bash prev && polybar-msg hook pulseeffects-presets-ipc 1
-click-right   = pulseeffects-presets.bash next && polybar-msg hook pulseeffects-presets-ipc 1
-click-middle  = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left   = pulseeffects-presets.bash prev  && polybar-msg hook pulseeffects-presets-ipc 1
+click-right  = pulseeffects-presets.bash next  && polybar-msg hook pulseeffects-presets-ipc 1
+click-middle = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
 ```
 
 *Note: the `pulseeffects-presets.bash` may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
