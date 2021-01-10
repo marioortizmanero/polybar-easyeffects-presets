@@ -39,9 +39,11 @@ where `action`, and (optionally) `option`s are as specified in `pulseffects-pres
 Usage: ./pulseeffects-presets.bash [OPTIONS...] ACTION
 
 Options: [defaults]
-  --format <string>            use a format string to control the output
-                               Available variables: $PRESET [$PRESET]
-  --config <string>            the script save file's location [~/.config/pulseeffects_preset]
+  --format <string>            use a format string to control the output.
+                               Available variables: $PRESET, $POSITION,
+                               $TOTAL [$PRESET]
+  --save-file <string>         the script's save file's location for persistent
+                               data [~/.config/pulseeffects_preset]
   --no-preset-name <string>    what name to use when no preset is set
                                [None]
   --output                     whether to use output or input presets in this
@@ -51,6 +53,7 @@ Actions:
   help   display this message and exit
   show   print the PulseEffects status once
   next   switch to the next PulseEffects status available
+  prev   switch to the previous PulseEffects status available
   reset  restore this script and PulseEffects to their initial states
 ```
 
@@ -60,9 +63,9 @@ See the [Module](#module) section for an example, or the [Useful icons](#useful-
 
 The example from the screenshot can:
 
-* Switch to the next preset on left click
-* Reset the script and PulseEffects on right click
-
+* Switch to the previous preset on left click
+* Switch to the next preset on right click
+* Reset the script and PulseEffects on mousewheel click
 
 If you want to apply both input and output presets, you can create two modules, one using `--output` and another with `--input`.
 
@@ -84,11 +87,12 @@ interval = 60
 # Uses IPC to update the output on click
 [module/pulseeffects-presets-ipc]
 type = custom/ipc
-hook-0 = pulseeffects-presets.bash --format '  $PRESET' show
+hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left  = pulseeffects-presets.bash next && polybar-msg hook pulseeffects-presets-ipc 1
-click-right  = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left    = pulseeffects-presets.bash prev && polybar-msg hook pulseeffects-presets-ipc 1
+click-right   = pulseeffects-presets.bash next && polybar-msg hook pulseeffects-presets-ipc 1
+click-middle  = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
 ```
 
 *Note: the `pulseeffects-presets.bash` may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
