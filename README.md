@@ -66,6 +66,7 @@ The example from the screenshot can:
 * Switch to the previous preset on left click
 * Switch to the next preset on right click
 * Reset the script and PulseEffects on mousewheel click
+* Update when the preset is changed with PulseEffects directly
 
 If you want to apply both input and output presets, you can create two modules, one using `--output` and another with `--input`.
 
@@ -82,11 +83,27 @@ enable-ipc = true
 [module/pulseeffects-presets]
 type = custom/script
 exec = polybar-msg hook pulseeffects-presets-ipc 1 &>/dev/null
+# You may want to tweak this for faster updates from PulseEffects
 interval = 60
 
 # Uses IPC to update the output on click
 [module/pulseeffects-presets-ipc]
 type = custom/ipc
+hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
+# The command shouldn't be ran once for each bar, so `next` and `reset` are
+# executed here and then the output is updated via IPC.
+click-left   = pulseeffects-presets.bash prev  && polybar-msg hook pulseeffects-presets-ipc 1
+click-right  = pulseeffects-presets.bash next  && polybar-msg hook pulseeffects-presets-ipc 1
+click-middle = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
+```
+
+Or if you don't care about preset updates from the PulseEffects app, you can use this simpler one, which will only update when it's interacted with:
+
+```ini
+# Uses IPC to update the output on click
+[module/pulseeffects-presets-ipc]
+type = custom/ipc
+initial = 1
 hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
