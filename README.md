@@ -107,12 +107,12 @@ interval = 60
 # Uses IPC to update the output on click
 [module/pulseeffects-presets-ipc]
 type = custom/ipc
-hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
+hook-0 = pulseeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left   = pulseeffects-presets.bash prev  && polybar-msg hook pulseeffects-presets-ipc 1
-click-right  = pulseeffects-presets.bash next  && polybar-msg hook pulseeffects-presets-ipc 1
-click-middle = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left   = pulseeffects-presets prev  && polybar-msg hook pulseeffects-presets-ipc 1
+click-right  = pulseeffects-presets next  && polybar-msg hook pulseeffects-presets-ipc 1
+click-middle = pulseeffects-presets reset && polybar-msg hook pulseeffects-presets-ipc 1
 ```
 
 Or if you don't care about preset updates from the PulseEffects app, you can use this simpler one, which will only update when it's interacted with:
@@ -122,15 +122,15 @@ Or if you don't care about preset updates from the PulseEffects app, you can use
 [module/pulseeffects-presets-ipc]
 type = custom/ipc
 initial = 1
-hook-0 = pulseeffects-presets.bash --format '  $PRESET [$POSITION/$TOTAL]' show
+hook-0 = pulseeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left   = pulseeffects-presets.bash prev  && polybar-msg hook pulseeffects-presets-ipc 1
-click-right  = pulseeffects-presets.bash next  && polybar-msg hook pulseeffects-presets-ipc 1
-click-middle = pulseeffects-presets.bash reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left   = pulseeffects-presets prev  && polybar-msg hook pulseeffects-presets-ipc 1
+click-right  = pulseeffects-presets next  && polybar-msg hook pulseeffects-presets-ipc 1
+click-middle = pulseeffects-presets reset && polybar-msg hook pulseeffects-presets-ipc 1
 ```
 
-*Note: the `pulseeffects-presets.bash` may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
+*Note: the `pulseeffects-presets` script may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
 
 ## Useful icons
 
