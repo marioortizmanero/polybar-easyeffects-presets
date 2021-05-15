@@ -92,23 +92,36 @@ function usage() {
     echo "\
 Usage: $0 [OPTIONS...] ACTION
 
-Options: [defaults]
-  --format <string>            use a format string to control the output.
-                               Available variables: \$PRESET, \$POSITION,
-                               \$TOTAL [$FORMAT]
-  --save-file <string>         the script's save file's location for persistent
-                               data [$SAVE_FILE]
-  --no-preset-name <string>    what name to use when no preset is set
-                               [$NO_PRESET_NAME]
-  --output                     whether to use output or input presets in this
-  --input                      script [$MODE]
+Options:
+  --format <string>
+        Use a format string to control the output.
+        Available variables:
+        * \$PRESET
+        * \$POSITION
+        * \$TOTAL
+        Default: $FORMAT
+  --save-file <string>
+        The script's save file's location for persistent data.
+        Default: $SAVE_FILE
+  --no-preset-name <string>
+        What name to use when no preset is set.
+        Default: $NO_PRESET_NAME
+  --output,
+  --input
+        Whether to use output or input presets in this script
+        Defaut: $MODE
 
 Actions:
   help   display this message and exit
   show   print the PulseEffects status once
   next   switch to the next PulseEffects status available
   prev   switch to the previous PulseEffects status available
-  reset  restore this script and PulseEffects to their initial states"
+  reset  restore this script and PulseEffects to their initial states
+
+Author:
+    Mario Ortiz Manero
+More info on GitHub:
+    https://github.com/marioortizmanero/polybar-pulseeffects-presets"
 }
 
 if ! pgrep -x pulseeffects &>/dev/null; then

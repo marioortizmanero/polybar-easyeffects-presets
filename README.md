@@ -11,6 +11,16 @@ A [Polybar](https://github.com/polybar/polybar) module to control [PulseEffects]
 
 ## Installation
 
+### Arch
+
+Install [`pulseeffects-presets`](https://aur.archlinux.org/packages/pulseeffects-presets/) from the AUR with your preferred method, for example:
+
+```
+$ yay -S pulseeffects-presets
+```
+
+### Other Linux
+
 Download the [bash script](https://github.com/marioortizmanero/polybar-pulseeffects-presets/blob/master/pulseeffects-presets.bash) from this repository, or extract it from [the latest release](https://github.com/marioortizmanero/polybar-pulseeffects-presets/releases/latest), and put it somewhere in your `$PATH`.
 
 #### Dependencies
@@ -30,24 +40,32 @@ You'll need a few presets set up for this module. You can do that inside the app
 ```ini
 [module/pulseffects-presets]
 type = custom/script
-exec = pulseeffects-presets.bash [option...] <action>
+exec = pulseeffects-presets [option...] <action>
 ```
 
 where `action`, and (optionally) `option`s are as specified in `pulseffects-presets help`:
 
 ```
-Usage: ./pulseeffects-presets.bash [OPTIONS...] ACTION
+Usage: ./pulseeffects-presets [OPTIONS...] ACTION
 
-Options: [defaults]
-  --format <string>            use a format string to control the output.
-                               Available variables: $PRESET, $POSITION,
-                               $TOTAL [$PRESET]
-  --save-file <string>         the script's save file's location for persistent
-                               data [~/.config/pulseeffects_preset]
-  --no-preset-name <string>    what name to use when no preset is set
-                               [None]
-  --output                     whether to use output or input presets in this
-  --input                      script [Output]
+Options:
+  --format <string>
+        Use a format string to control the output.
+        Available variables:
+        * $PRESET
+        * $POSITION
+        * $TOTAL
+        Default: $PRESET
+  --save-file <string>
+        The script's save file's location for persistent data.
+        Default: /home/mario/.config/pulseeffects_preset
+  --no-preset-name <string>
+        What name to use when no preset is set.
+        Default: None
+  --output,
+  --input
+        Whether to use output or input presets in this script
+        Defaut: Output
 
 Actions:
   help   display this message and exit
