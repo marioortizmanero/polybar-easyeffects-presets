@@ -125,7 +125,7 @@ More info on GitHub:
 }
 
 if ! pgrep -x easyeffects &>/dev/null; then
-    echo ""
+    echo "EasyEffects not running"
     exit 1
 fi
 
