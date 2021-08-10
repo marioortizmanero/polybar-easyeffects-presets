@@ -1,10 +1,10 @@
-# PulseEffects Presets
+# EasyEffects Presets
 
-A [Polybar](https://github.com/polybar/polybar) module to control [PulseEffects](https://github.com/wwmm/pulseeffects) with presets. Main features:
+A [Polybar](https://github.com/polybar/polybar) module to control [EasyEffects](https://github.com/wwmm/easyeffects) with presets. Main features:
 
 * Switch between presets with a single click.
 * Works both for output and input presets.
-* Reset PulseEffects easily.
+* Reset EasyEffects easily.
 * Highly customizable: check the [Usage](#usage) section for details.
 
 ![example](images/example.png)
@@ -13,40 +13,40 @@ A [Polybar](https://github.com/polybar/polybar) module to control [PulseEffects]
 
 ### Arch
 
-Install [`pulseeffects-presets`](https://aur.archlinux.org/packages/pulseeffects-presets/) from the AUR with your preferred method, for example:
+Install [`easyeffects-presets`](https://aur.archlinux.org/packages/easyeffects-presets/) from the AUR with your preferred method, for example:
 
 ```
-$ yay -S pulseeffects-presets
+$ yay -S easyeffects-presets
 ```
 
 ### Other Linux
 
-Download the [bash script](https://github.com/marioortizmanero/polybar-pulseeffects-presets/blob/master/pulseeffects-presets.bash) from this repository, or extract it from [the latest release](https://github.com/marioortizmanero/polybar-pulseeffects-presets/releases/latest), and put it somewhere in your `$PATH`.
+Download the [bash script](https://github.com/marioortizmanero/polybar-easyeffects-presets/blob/master/easyeffects-presets.bash) from this repository, or extract it from [the latest release](https://github.com/marioortizmanero/polybar-easyeffects-presets/releases/latest), and put it somewhere in your `$PATH`.
 
 #### Dependencies
 
-The only dependency is [`pulseeffects`](https://github.com/wwmm/pulseeffects). The script is intended to be used with Polybar but it can be easily adapted to work with other status bars. If you get it working somewhere else let us know to update this README!
+The only dependency is [`easyeffects`](https://github.com/wwmm/easyeffects). The script is intended to be used with Polybar but it can be easily adapted to work with other status bars. If you get it working somewhere else let us know to update this README!
 
 At a minimum, bash version 4.2 is required to run the script. You can check your bash version by running `bash --version`.
 
 You'll need a few presets set up for this module. You can do that inside the app by configuring some filters (e.g. the Equalizer) and saving them in the "Presets" tab:
 
-![presets](images/pulseeffects.png)
+![presets](images/easyeffects.png)
 
 ## Usage
 
-`pulseeffects-presets` is expected to be invoked from a [polybar](//github.com/polybar/polybar) module:
+`easyeffects-presets` is expected to be invoked from a [polybar](//github.com/polybar/polybar) module:
 
 ```ini
 [module/pulseffects-presets]
 type = custom/script
-exec = pulseeffects-presets [option...] <action>
+exec = easyeffects-presets [option...] <action>
 ```
 
 where `action`, and (optionally) `option`s are as specified in `pulseffects-presets help`:
 
 ```
-Usage: ./pulseeffects-presets [OPTIONS...] ACTION
+Usage: ./easyeffects-presets [OPTIONS...] ACTION
 
 Options:
   --format <string>
@@ -58,7 +58,7 @@ Options:
         Default: $PRESET
   --save-file <string>
         The script's save file's location for persistent data.
-        Default: /home/mario/.config/pulseeffects_preset
+        Default: /home/mario/.config/easyeffects_preset
   --no-preset-name <string>
         What name to use when no preset is set.
         Default: None
@@ -69,10 +69,10 @@ Options:
 
 Actions:
   help   display this message and exit
-  show   print the PulseEffects status once
-  next   switch to the next PulseEffects status available
-  prev   switch to the previous PulseEffects status available
-  reset  restore this script and PulseEffects to their initial states
+  show   print the EasyEffects status once
+  next   switch to the next EasyEffects status available
+  prev   switch to the previous EasyEffects status available
+  reset  restore this script and EasyEffects to their initial states
 ```
 
 See the [Module](#module) section for an example, or the [Useful icons](#useful-icons) section for some packs of icons.
@@ -83,8 +83,8 @@ The example from the screenshot can:
 
 * Switch to the previous preset on left click
 * Switch to the next preset on right click
-* Reset the script and PulseEffects on mousewheel click
-* Update when the preset is changed with PulseEffects directly
+* Reset the script and EasyEffects on mousewheel click
+* Update when the preset is changed with EasyEffects directly
 
 If you want to apply both input and output presets, you can create two modules, one using `--output` and another with `--input`.
 
@@ -92,45 +92,45 @@ If you want to apply both input and output presets, you can create two modules, 
 [bar/status_bar]
 modules-left   =
 modules-center =
-modules-right  = pulseeffects-presets pulseeffects-presets-ipc
+modules-right  = easyeffects-presets easyeffects-presets-ipc
 # IPC is required so that the output is instantly refreshed when performing an
 # action. Thus, `enable-ipc` must be set to `true` in your bar's config. It's a
 # workaround until https://github.com/polybar/polybar/issues/786 is fixed.
 enable-ipc = true
 
-[module/pulseeffects-presets]
+[module/easyeffects-presets]
 type = custom/script
-exec = polybar-msg hook pulseeffects-presets-ipc 1 &>/dev/null
-# You may want to tweak this for faster updates from PulseEffects
+exec = polybar-msg hook easyeffects-presets-ipc 1 &>/dev/null
+# You may want to tweak this for faster updates from EasyEffects
 interval = 60
 
 # Uses IPC to update the output on click
-[module/pulseeffects-presets-ipc]
+[module/easyeffects-presets-ipc]
 type = custom/ipc
-hook-0 = pulseeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
+hook-0 = easyeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left   = pulseeffects-presets prev  && polybar-msg hook pulseeffects-presets-ipc 1
-click-right  = pulseeffects-presets next  && polybar-msg hook pulseeffects-presets-ipc 1
-click-middle = pulseeffects-presets reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left   = easyeffects-presets prev  && polybar-msg hook easyeffects-presets-ipc 1
+click-right  = easyeffects-presets next  && polybar-msg hook easyeffects-presets-ipc 1
+click-middle = easyeffects-presets reset && polybar-msg hook easyeffects-presets-ipc 1
 ```
 
-Or if you don't care about preset updates from the PulseEffects app, you can use this simpler one, which will only update when it's interacted with:
+Or if you don't care about preset updates from the EasyEffects app, you can use this simpler one, which will only update when it's interacted with:
 
 ```ini
 # Uses IPC to update the output on click
-[module/pulseeffects-presets-ipc]
+[module/easyeffects-presets-ipc]
 type = custom/ipc
 initial = 1
-hook-0 = pulseeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
+hook-0 = easyeffects-presets --format '  $PRESET [$POSITION/$TOTAL]' show
 # The command shouldn't be ran once for each bar, so `next` and `reset` are
 # executed here and then the output is updated via IPC.
-click-left   = pulseeffects-presets prev  && polybar-msg hook pulseeffects-presets-ipc 1
-click-right  = pulseeffects-presets next  && polybar-msg hook pulseeffects-presets-ipc 1
-click-middle = pulseeffects-presets reset && polybar-msg hook pulseeffects-presets-ipc 1
+click-left   = easyeffects-presets prev  && polybar-msg hook easyeffects-presets-ipc 1
+click-right  = easyeffects-presets next  && polybar-msg hook easyeffects-presets-ipc 1
+click-middle = easyeffects-presets reset && polybar-msg hook easyeffects-presets-ipc 1
 ```
 
-*Note: the `pulseeffects-presets` script may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
+*Note: the `easyeffects-presets` script may be saved somewhere else and pointed at with the full path instead of by adding it to the `$PATH`*
 
 ## Useful icons
 

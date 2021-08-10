@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Script to control PulseEffects via Polybar with the saved presets.
+# Script to control EasyEffects via Polybar with the saved presets.
 
 ####################################################################
-# Polybar PulseEffects Presets                                     #
-# https://github.com/marioortizmanero/polybar-pulseeffects-presets #
+# Polybar EasyEffects Presets                                      #
+# https://github.com/marioortizmanero/polybar-easyeffects-presets  #
 ####################################################################
 
-SAVE_FILE="$HOME/.config/pulseeffects_preset"
+SAVE_FILE="$HOME/.config/easyeffects_preset"
 # shellcheck disable=SC2016
 FORMAT='$PRESET'
 NO_PRESET_NAME=None
@@ -32,7 +32,7 @@ function setCurPreset() {
     position=$(($2 + 1))
     total=$3
 
-    pulseeffects --load-preset "$name" &>/dev/null &
+    easyeffects --load-preset "$name" &>/dev/null &
     echo -e "$name\n$position\n$total" > "$SAVE_FILE"
 }
 
@@ -50,7 +50,7 @@ function updatePreset() {
     local mode=$1
 
     # Obtaining the presets available
-    IFS="," read -r -a presets <<< "$(pulseeffects --presets 2>&1 | grep "$MODE Presets:" | sed 's/^.\+: //')"
+    IFS="," read -r -a presets <<< "$(easyeffects --presets 2>&1 | grep "$MODE Presets:" | sed 's/^.\+: //')"
     local numPresets=${#presets[@]}
 
     # If the resulting list is empty, nothing is done
@@ -82,7 +82,7 @@ function updatePreset() {
 }
 
 function reset() {
-    pulseeffects --reset &
+    easyeffects --reset &
     rm -f "$SAVE_FILE"
 
     show
@@ -113,18 +113,18 @@ Options:
 
 Actions:
   help   display this message and exit
-  show   print the PulseEffects status once
-  next   switch to the next PulseEffects status available
-  prev   switch to the previous PulseEffects status available
-  reset  restore this script and PulseEffects to their initial states
+  show   print the EasyEffects status once
+  next   switch to the next EasyEffects status available
+  prev   switch to the previous EasyEffects status available
+  reset  restore this script and EasyEffects to their initial states
 
 Author:
     Mario Ortiz Manero
 More info on GitHub:
-    https://github.com/marioortizmanero/polybar-pulseeffects-presets"
+    https://github.com/marioortizmanero/polybar-easyeffects-presets"
 }
 
-if ! pgrep -x pulseeffects &>/dev/null; then
+if ! pgrep -x easyeffects &>/dev/null; then
     echo ""
     exit 1
 fi
